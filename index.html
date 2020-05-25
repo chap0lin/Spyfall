@@ -28,10 +28,10 @@
                             document.cookie = 'playerID=' + response.PlayerID;
                             document.cookie = 'roomID=' + response.RoomID;
                             document.cookie = 'host=1';
-                            window.location.href='http://cdxengenharia.com.br/projetos/spyfall/room'
+                            window.location.href='Room.html'
                         }
                     }
-                    request.open("POST", 'http://cdxengenharia.com.br/projetos/spyfall/services/createRoom.php');
+                    request.open("POST", 'https://cdxengenharia.com.br/projetos/spyfall/services/createRoom.php');
                     request.send(data);
                     console.log('Criando Sala...');
 
@@ -55,7 +55,7 @@
                                 document.cookie = 'playerID=' + response.PlayerID;
                                 document.cookie = 'roomID=' + response.RoomID;
                                 document.cookie = 'host=0';
-                                window.location.href='http://cdxengenharia.com.br/projetos/spyfall/room'
+                                window.location.href='Room.html'
                             }else{
                                 var modal = document.getElementById("modalError");
                                 modal.style.display = "block";
@@ -63,7 +63,7 @@
                             }
                         }
                     }
-                    request.open("POST", 'http://cdxengenharia.com.br/projetos/spyfall/services/enterRoom.php');
+                    request.open("POST", 'https://cdxengenharia.com.br/projetos/spyfall/services/enterRoom.php');
                     request.send(data);
                     console.log('Entrando na Sala...');
                 }
