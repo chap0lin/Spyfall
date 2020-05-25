@@ -6,69 +6,7 @@
         <title>Spyfall</title>
         <link rel="shortcut icon" href="http://cdxengenharia.com.br/projetos/spyfall/assets/img/spy.png" type="image/png">
         <link rel="stylesheet" href="screens/template/css/landingPage.css">
-        <script>
-            //Functions:
-            validarForm = function(destiny){
-                console.log(destiny);
-                // valida apelido
-                var nome = document.getElementById('Nome').value;
-                var roomID = document.getElementById('roomID').value;
-                console.log("Nome:" + nome + ", Room: " + roomID);
-                if(destiny == 'Criar'){
-                    console.log('Criando Player...');
-                    document.cookie = 'username=' + nome;
-                    var data = new FormData();
-                    data.append('nome',nome);
-                    //var data = 'nome=' + nome
-                    var request = new XMLHttpRequest();
-                    request.onreadystatechange = function(){
-                        if (this.readyState == 4 && this.status == 200) {
-                            console.log(this.responseText)
-                            var response = JSON.parse(this.responseText);
-                            document.cookie = 'playerID=' + response.PlayerID;
-                            document.cookie = 'roomID=' + response.RoomID;
-                            document.cookie = 'host=1';
-                            window.location.href='http://cdxengenharia.com.br/projetos/spyfall/room'
-                        }
-                    }
-                    request.open("POST", 'http://cdxengenharia.com.br/projetos/spyfall/services/createRoom.php');
-                    request.send(data);
-                    console.log('Criando Sala...');
-
-                }
-                if(destiny == 'Entrar'){
-                    console.log('Criando Player...');
-                    document.cookie = 'username=' + nome;
-                    //console.log(nome)
-                    var data = new FormData();
-                    data.append('nome',nome);
-                    data.append('roomID',roomID);
-
-                    //var data = 'nome=' + nome
-                    var request = new XMLHttpRequest();
-                    request.onreadystatechange = function(){
-                        if (this.readyState == 4 && this.status == 200) {
-                            console.log(this.responseText)
-                            var response = JSON.parse(this.responseText);
-                            if(response.ValidRoom){
-                                console.log('Redirecionar para Sala')
-                                document.cookie = 'playerID=' + response.PlayerID;
-                                document.cookie = 'roomID=' + response.RoomID;
-                                document.cookie = 'host=0';
-                                window.location.href='http://cdxengenharia.com.br/projetos/spyfall/room'
-                            }else{
-                                var modal = document.getElementById("modalError");
-                                modal.style.display = "block";
-                                console.log('Sala Inválida!')
-                            }
-                        }
-                    }
-                    request.open("POST", 'http://cdxengenharia.com.br/projetos/spyfall/services/enterRoom.php');
-                    request.send(data);
-                    console.log('Entrando na Sala...');
-                }
-            }
-        </script>
+        
     </head>
     <body>
         <div class="container">
@@ -98,33 +36,8 @@
                     <h2 id="errorMessage">Sala inexistente ou com partida em progresso.</h2>
                 </div>
             </div>
-            <script>
-                var modal = document.getElementById("modalError");
-                var btn = document.getElementById("modalBtn");
-                // Get the <span> element that closes the modal
-                var span = document.getElementsByClassName("close")[0];   
-                // When the user clicks on <span> (x), close the modal
-                span.onclick = function() {
-                    modal.style.display = "none";
-                }
-    
-                // When the user clicks anywhere outside of the modal, close it
-                window.onclick = function(event) {
-                    if (event.target == modal) {
-                        modal.style.display = "none";
-                    }
-                }
-            </script>
+            
         </div>
-        <script>
-            var CriarBtn = document.getElementById('criarBtn');
-            var EntrarBtn = document.getElementById('entrarBtn');
-            CriarBtn.onclick = function(){
-                validarForm('Criar')
-            }
-            EntrarBtn.onclick = function(){
-                validarForm('Entrar')
-            }
-        </script>
+
     </body>
 </html>
