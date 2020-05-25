@@ -1,0 +1,139 @@
+*{
+    font-family: 'Lato', 'Arial Narrow', Arial, sans-serif;
+}
+body{
+    background-color: #eeeeee;
+}
+.container{
+    max-width: 1170px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+}
+.roomCodeBox{
+    align-self: center;
+    background-color: #eee;
+    border: 1px solid #555;
+    padding: 5px;
+    border-radius: 5px;
+}
+.roomCode{
+    font-size: medium;
+}
+.wrapper{
+    box-shadow: 0 0 20px 0 rgba(72,94,116,0.7);
+    border-radius: 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}
+.playersTitle{
+    align-self: center;
+    padding-top: 0;
+    font-size: large;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.playersList{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    list-style-type: none;
+    margin-top: 0;
+    padding:0;
+    padding-bottom: 20px;
+}
+.playerItem{
+    display: flex;
+    flex-direction: column;
+    height: 25px;
+}
+.playerItemDiv{
+    display: flex;
+    border: 1px solid #ccc;
+    padding-right: 20px;
+    padding-left: 20px;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    height: 25px;
+
+}
+.playerItemDiv h4{
+    height: 25px;
+
+}
+.roleButton{
+    background-color: #333;
+    width: fit-content;
+    height: 30px;
+    align-self: center;
+    margin-top: 10px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+.roleButton h3{
+    color:#eee;
+    padding-left: 20px;
+    padding-right: 20px;
+    
+}
+.timer{
+    text-align: center;
+}
+.createOrEnterContainer{
+    padding: 0em;
+}
+.listLocations{
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+@media(min-width:700px){
+    .createOrEnterContainer{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap:0em;
+    }
+}
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+/* Modal Content */
+.modalContent {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+.modalContent h2 span{
+    font-weight: bold;
+}
+.modalContent h2{
+    font-weight: 100;
+}
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover, .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}

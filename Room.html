@@ -1,0 +1,249 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Spyfall</title>
+        <link rel="shortcut icon" href="http://cdxengenharia.com.br/projetos/spyfall/assets/img/spy.png" type="image/png">
+        <link rel="stylesheet" href="screens/template/css/Room.css">
+        <script>
+            //Global Variables:
+            var username = getCookie('username');
+            var playerID = getCookie('playerID');
+            var roomID = getCookie('roomID');
+            var isHost = getCookie('host');
+            var started = false;
+            var initialTime = null;
+            var timer;
+
+            //Functions:
+            function getCookie(cname) {
+                var name = cname + "=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(';');
+                for(var i = 0; i <ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+            stopRound = function(){
+                clearInterval(timer);
+                started = false;
+                initialTime = null;
+                document.body.style.backgroundColor = '#eeeeee';
+                if(isHost == 1){
+                    var btn = document.getElementById('startBtn');
+                    btn.innerHTML = "<h3>INICIAR JOGO</h3>";
+                }
+            }
+            updateTimer = function(){
+                var now = new Date().getTime();
+                var distance = initialTime - now;
+                if(distance < 0){
+                    stopRound();
+                }else{
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    if(minutes<10){
+                        minutes = '0' + minutes;
+                    }
+                    if(seconds<10){
+                        seconds = '0' + seconds;
+                    }
+                    document.getElementById('timerID').innerHTML = minutes + ':' + seconds;
+                }
+            }
+            startTimer = function(data){
+                initialTime = new Date(data.started).getTime() + 480000;
+                timer = setInterval(updateTimer,1000);
+            }
+            showPlayers = function(data){
+                var htmlList = ''
+                for(var i=0;i<data.length;i++){
+                    htmlList+= '<li class="playerItem"><div class="playerItemDiv"><h4>' + data[i].nome + '</h4><p>';
+                    htmlList+= data[i].host==1?'HOST':'';
+                    htmlList+= '</p></div></li>';
+                }
+                document.getElementById('listPla').innerHTML = htmlList
+                if(started){
+                    var players = document.querySelectorAll("#listPla li div h4");
+                    for(var i = 0; i < players.length; i++){
+                        players[i].onclick = function(){
+                            if(this.style.textDecoration == 'line-through')
+                                this.style.textDecoration = "none";
+                            else
+                                this.style.textDecoration = 'line-through';
+                        };
+                    }
+                }
+            }
+            startRound = function(data){
+                started = true;
+                document.getElementById("placeID").innerHTML = "<span>Local:</span> " + data.place;
+                document.getElementById("roleID").innerHTML = "<span>Papel:</span> " + data.role;
+                document.getElementById("modalBtn").style.display = 'flex';
+                if(isHost == 1){
+                    var btn = document.getElementById('startBtn');
+                    btn.innerHTML = "<h3>PARAR JOGO</h3>";
+                }
+                document.body.style.backgroundColor = '#AAAAAA';
+                if(initialTime==null){
+                    startTimer(data);
+                    showPlayers(data.players);
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="roomCodeBox">
+                <h1 class="roomCode" id="roomIdtext">SALA: 23</h1>
+            </div>
+            <div class="wrapper">
+                <h2 class="playersTitle">JOGADORES:</h2>
+                <ul class="playersList" id="listPla">
+                </ul>
+            </div>
+            <div class="roleButton" id="modalBtn">
+                <h3>SUA CARTA</h3>
+            </div>
+            <div class="roleButton" id="startBtn">
+                <h3>INICIAR JOGO</h3>
+            </div>
+            <h2 class="timer" id="timerID"></h2>
+            <div class="wrapper">
+                <div class="createOrEnterContainer">
+                    <div class="enterContainer">
+                        <ul class="listLocations" id="listLoc">
+                            <li>Avião</li>
+                            <li>Banco</li>
+                            <li>Base Militar</li>
+                            <li>Casa Noturna</li>
+                            <li>Casino</li>
+                            <li>Catedral</li>
+                            <li>Circo</li>
+                            <li>Cruzeiro</li>
+                            <li>Delegacia</li>
+                            <li>Embaixada</li>
+                            <li>Escola</li>
+                            <li>Estação Espacial</li>
+                            <li>Estúdio de Cinema</li>
+                        </ul>
+                    </div>
+                    <div class="createContainer">
+                        <ul class="listLocations" id="listLoc">
+                            <li>Festa do Escritório</li>
+                            <li>Hospital</li>
+                            <li>Hotel</li>
+                            <li>Navio Pirata</li>
+                            <li>Praia</li>
+                            <li>Quartel General</li>
+                            <li>Restaurante</li>
+                            <li>Spa</li>
+                            <li>Submarino</li>
+                            <li>Supermercado</li>
+                            <li>Teatro</li>
+                            <li>Trem</li>
+                            <li>Universidade</li>
+                        </ul>
+                    </div>
+                    <script>
+                        var items = document.querySelectorAll("#listLoc li");
+                        for(var i = 0; i < items.length; i++){
+                            items[i].onclick = function(){
+                                if(this.style.textDecoration == 'line-through')
+                                    this.style.textDecoration = "none";
+                                else
+                                    this.style.textDecoration = 'line-through';
+                            };
+                        }
+                    </script>
+                </div>
+                
+            </div>
+        </div>
+        <div id="modalCard" class="modal">
+            <div class="modalContent">
+                <span class="close">&times;</span>
+                <h2 id="placeID"><span>Local:</span> Lanchonete</h2>
+                <h2 id="roleID"><span>Papel:</span> Caixa</h2>
+            </div>
+        </div>
+        <script>
+            var modal = document.getElementById("modalCard");
+            var btn = document.getElementById("modalBtn");
+            var span = document.getElementsByClassName("close")[0];
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+        <script>
+            // Show Room Number
+            document.getElementById('roomIdtext').innerHTML = "SALA: " + roomID;
+
+            //Host Setup:
+            var btnStart = document.getElementById('startBtn');
+            if(isHost == 1){
+                btnStart.style.display = "inherit";
+            }else{
+                btnStart.style.display = "none";
+            }
+            //Listeners:
+            btnStart.onclick = function(){
+                var request = new XMLHttpRequest();
+                var data = new FormData();
+                data.append('roomID',roomID);
+                console.log(roomID);
+                request.onreadystatechange = function(){
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText)
+                        //var response = JSON.parse(this.responseText)
+                    }
+                }
+                if(!started){
+                    request.open("POST", 'http://cdxengenharia.com.br/projetos/spyfall/services/startGame.php');
+                }else{
+                    request.open("POST", 'http://cdxengenharia.com.br/projetos/spyfall/services/stopGame.php');
+                }
+                request.send(data);
+            }
+            //Update Function
+            update = function(){
+                var request = new XMLHttpRequest();
+                var data = new FormData();
+                data.append('playerID',playerID);
+                data.append('roomID',roomID);
+                request.onreadystatechange = function(){
+                    if (this.readyState == 4 && this.status == 200) {
+                        //document.getElementById("teste").innerHTML = this.responseText;
+                        var response = JSON.parse(this.responseText)
+                        if(response.started != '0'){
+                            startRound(response);
+                        }else {
+                            if(started){
+                                stopRound();
+                            }
+                            showPlayers(response.players)
+                        }
+                    }
+                }
+                request.open("POST", 'http://cdxengenharia.com.br/projetos/spyfall/services/keepPlayerAlive.php');
+                request.send(data);
+            }
+            setInterval(update,1000);
+        </script>
+    </body>
+</html>
