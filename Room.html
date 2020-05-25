@@ -214,9 +214,9 @@
                     }
                 }
                 if(!started){
-                    request.open("POST", 'http://cdxengenharia.com.br/projetos/spyfall/services/startGame.php');
+                    request.open("POST", 'https://cdxengenharia.com.br/projetos/spyfall/services/startGame.php');
                 }else{
-                    request.open("POST", 'http://cdxengenharia.com.br/projetos/spyfall/services/stopGame.php');
+                    request.open("POST", 'https://cdxengenharia.com.br/projetos/spyfall/services/stopGame.php');
                 }
                 request.send(data);
             }
@@ -240,7 +240,7 @@
                         }
                     }
                 }
-                request.open("POST", 'http://cdxengenharia.com.br/projetos/spyfall/services/keepPlayerAlive.php');
+                request.open("POST", 'https://cdxengenharia.com.br/projetos/spyfall/services/keepPlayerAlive.php');
                 request.send(data);
             }
             setInterval(update,1000);
