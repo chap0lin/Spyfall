@@ -31,7 +31,26 @@
                 }
                 return "";
             }
+            startOrStopGame = function(param){
+                var request = new XMLHttpRequest();
+                var data = new FormData();
+                data.append('roomID',roomID);
+                //console.log(roomID);
+                request.onreadystatechange = function(){
+                    if (this.readyState == 4 && this.status == 200) {
+                        //console.log(this.responseText)
+                        //var response = JSON.parse(this.responseText)
+                    }
+                }
+                if(param == 'START'){
+                    request.open("POST", 'https://cdxengenharia.com.br/projetos/spyfall/services/startGame.php');
+                }else{
+                    request.open("POST", 'https://cdxengenharia.com.br/projetos/spyfall/services/stopGame.php');
+                }
+                request.send(data);
+            }
             stopRound = function(){
+                startOrStopGame('STOP');
                 clearInterval(timer);
                 started = false;
                 initialTime = null;
@@ -59,7 +78,8 @@
                 }
             }
             startTimer = function(data){
-                initialTime = new Date(data.started).getTime() + 480000;
+                var formatedDate = data.started.replace('-','/').replace('-','/') // Format date from dd-mm-aaaa to dd/mm/aaaa to work on IE8
+                initialTime = new Date(formatedDate).getTime() + 480000;
                 timer = setInterval(updateTimer,1000);
             }
             showPlayers = function(data){
@@ -87,6 +107,7 @@
                 document.getElementById("placeID").innerHTML = "<span>Local:</span> " + data.place;
                 document.getElementById("roleID").innerHTML = "<span>Papel:</span> " + data.role;
                 document.getElementById("modalBtn").style.display = 'flex';
+                document.getElementById('playersTitle').innerHTML = '<span class="tooltip">JOGADORES:<span class="tooltiptext">Quando a rodada começar você pode clicar no nome dos jogadores para marcá-los</span></span>';
                 if(isHost == 1){
                     var btn = document.getElementById('startBtn');
                     btn.innerHTML = "<h3>PARAR JOGO</h3>";
@@ -105,7 +126,7 @@
                 <h1 class="roomCode" id="roomIdtext">SALA: 23</h1>
             </div>
             <div class="wrapper">
-                <h2 class="playersTitle">JOGADORES:</h2>
+                <h2 class="playersTitle" id="playersTitle">JOGADORES:</h2>
                 <ul class="playersList" id="listPla">
                 </ul>
             </div>
@@ -117,6 +138,7 @@
             </div>
             <h2 class="timer" id="timerID"></h2>
             <div class="wrapper">
+                <h2 class="playersTitle">LOCALIZAÇÕES:</h2>
                 <div class="createOrEnterContainer">
                     <div class="enterContainer">
                         <ul class="listLocations" id="listLoc">
@@ -141,8 +163,8 @@
                             <li>Hospital</li>
                             <li>Hotel</li>
                             <li>Navio Pirata</li>
+                            <li>Parque de diversão</li>
                             <li>Praia</li>
-                            <li>Quartel General</li>
                             <li>Restaurante</li>
                             <li>Spa</li>
                             <li>Submarino</li>
@@ -166,6 +188,11 @@
                 </div>
                 
             </div>
+            <a style="display: flex; flex-direction: column;" href="index.html">
+                <div class="roomCodeBox">
+                    <h1 class="roomCode">SAIR</h1>
+                </div>
+            </a>
         </div>
         <div id="modalCard" class="modal">
             <div class="modalContent">
@@ -174,6 +201,7 @@
                 <h2 id="roleID"><span>Papel:</span> Caixa</h2>
             </div>
         </div>
+        
         <script>
             var modal = document.getElementById("modalCard");
             var btn = document.getElementById("modalBtn");
@@ -203,22 +231,11 @@
             }
             //Listeners:
             btnStart.onclick = function(){
-                var request = new XMLHttpRequest();
-                var data = new FormData();
-                data.append('roomID',roomID);
-                console.log(roomID);
-                request.onreadystatechange = function(){
-                    if (this.readyState == 4 && this.status == 200) {
-                        console.log(this.responseText)
-                        //var response = JSON.parse(this.responseText)
-                    }
-                }
                 if(!started){
-                    request.open("POST", 'https://cdxengenharia.com.br/projetos/spyfall/services/startGame.php');
+                    startOrStopGame('START');
                 }else{
-                    request.open("POST", 'https://cdxengenharia.com.br/projetos/spyfall/services/stopGame.php');
+                    startOrStopGame('STOP');
                 }
-                request.send(data);
             }
             //Update Function
             update = function(){

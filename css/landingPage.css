@@ -1,6 +1,3 @@
-*{
-    font-family: 'Lato', 'Arial Narrow', Arial, sans-serif;
-}
 body{
     background-color: #eeeeee;
 }
@@ -50,6 +47,7 @@ body{
 .button:hover, .button:focus{
     background: #8f8f8f;
     transition: background-color 1s ease-out;
+    cursor: pointer;
 }
 input{
     border-radius: 10px;
