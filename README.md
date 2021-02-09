@@ -7,4 +7,4 @@ Ainda não havia feito um jogo multiplayer online, então resolvi tentar fazer u
 
 Consegui adaptar adaptar o código para rodar o front-end no github pages, porém o servidor está rodando no site da minha empresa CDX engenharia.
 
-Link pro Jogo: https://chap0lin.github.io/Spyfall/ (Offline-pendente troca de servidor #7)
+Link pro Jogo: https://chap0lin.github.io/Spyfall/ (Offline-pendente troca de servidor #8)
