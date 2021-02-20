@@ -18,7 +18,7 @@ Implementação do jogo de tabuleiro Spyfall utilizando desnecessariamente muito
 
 
 ## :rocket: Como usar
-Consegui adaptar adaptar o código para rodar o front-end no github pages, porém o servidor estava rodando em um servidor php (apache) e no momento estou adaptando para node.js.
+Consegui adaptar adaptar o código para rodar o front-end no github pages, porém o servidor estava rodando em um servidor php (apache) e no momento estou adaptando para node.js na aws.
 
 Link pro Jogo: https://chap0lin.github.io/Spyfall/ (Offline-pendente troca de servidor #9)
 
